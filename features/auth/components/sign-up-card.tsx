@@ -5,7 +5,7 @@ import { Separator } from "@radix-ui/react-separator";
 import {FcGoogle} from "react-icons/fc"
 import {FaGithub} from "react-icons/fa"
 import { signInFlow } from "../types";
-import {useState} from "react";
+import {use, useState} from "react";
 import { TriangleAlert} from "lucide-react";
 import { useAuthActions } from "@convex-dev/auth/react";
 
@@ -14,6 +14,8 @@ interface signUpCardProps {
     setState : ( state : signInFlow ) => void;
 };
 export const SignUpCard = ({setState} : signUpCardProps) => {
+
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -65,7 +67,7 @@ export const SignUpCard = ({setState} : signUpCardProps) => {
                 setPending(true);
                 
                 
-                signIn("password", { email, password, flow : "signUp"})
+                signIn("password", { name, email, password, flow : "signUp"})
                 .catch(() => {
                     setError("inavlid email or password");
                 })
@@ -73,6 +75,14 @@ export const SignUpCard = ({setState} : signUpCardProps) => {
                     setPending(false);
                 })
             }}>
+                <Input
+                name = "name"
+                disabled = {pending}
+                value = {name}
+                onChange= {(e) =>{ setName(e.target.value)}}
+                placeholder = "Full Name"
+                required>
+                </Input>
                 <Input
                 name = "email"
                 disabled = {pending}
