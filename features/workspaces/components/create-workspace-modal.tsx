@@ -26,11 +26,11 @@ export const CreateWorkspaceModal = () => {
     const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        mutate({name}
+        await mutate({name}
         ,{
            onSuccess(id){
             toast.success("workspace created");
-            router.push(`/workspace/$id`);
+            router.push(`/workspace/${id}`);
             handleClose();
            }
         })
