@@ -8,6 +8,9 @@ import { DropdownMenu,
  } from "@/components/ui/dropdown-menu";
 import { Doc } from "@/convex/_generated/dataModel";
 import { ChevronDown, ListFilter, SquarePen } from "lucide-react";
+import { PreferencesModal } from "./preferences-modal";
+import { useState } from "react";
+import { InviteModal } from "./invite-modal";
 
  interface WorkspaceHeaderProps {
     workspace : Doc<"workspaces">;
@@ -15,7 +18,16 @@ import { ChevronDown, ListFilter, SquarePen } from "lucide-react";
  }
 
 export const WorkspaceHeader = ( {workspace, isAdmin} : WorkspaceHeaderProps) => {
+    const [preferencesOpen, setPreferencesOpen] = useState(false);
+    const [inviteOpen, setInviteOpen] = useState(false);
     return(
+        <>
+        <InviteModal 
+        open = {inviteOpen}
+        setOpen = {setInviteOpen}
+        name={workspace.name}
+        joinCode = {workspace.joinCode}/>
+        <PreferencesModal open = {preferencesOpen} setOpen={setPreferencesOpen} initialValue={workspace.name}/>
         <div className="flex items-center justify-between px-4 h-[49px] gap-0.5">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -43,11 +55,14 @@ export const WorkspaceHeader = ( {workspace, isAdmin} : WorkspaceHeaderProps) =>
                     {isAdmin &&(
                         <>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="cursor-pointer py-2">
+                    <DropdownMenuItem 
+                    onClick={() => setInviteOpen(true)}
+                    className="cursor-pointer py-2">
                         Invite people to {workspace.name}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="cursor-pointer py-2">
+                    <DropdownMenuItem className="cursor-pointer py-2"
+                    onClick={() => setPreferencesOpen(true)}>
                         Preferences
                     </DropdownMenuItem>
                     </>
@@ -69,5 +84,6 @@ export const WorkspaceHeader = ( {workspace, isAdmin} : WorkspaceHeaderProps) =>
                 </Hint>
             </div>
         </div>
+        </>
     );
 };

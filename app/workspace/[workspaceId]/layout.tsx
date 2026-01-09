@@ -19,8 +19,8 @@ const WorkspaceIdLayout = ( {children} : WorkspaceIdLayoutProps) => {
                 orientation = "horizontal"
                 autoSave = "workspace-layout">
                     <ResizablePanel
-                    defaultSize={150}
-                    minSize={50}
+                    defaultSize={300}
+                    minSize={150}
                     className="bg-[#5E2C5F]"
                     id="sidebar">
                        <WorkspaceSidebar />
